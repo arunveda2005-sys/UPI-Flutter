@@ -1,13 +1,12 @@
+// lib/screens/send_money.dart
 import 'package:flutter/material.dart';
-import '../widgets/input_field.dart';
-import '../widgets/custom_button.dart';
 
 class SendMoneyScreen extends StatelessWidget {
   const SendMoneyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final upiController = TextEditingController();
+    final phoneController = TextEditingController();
     final amountController = TextEditingController();
 
     return Scaffold(
@@ -16,24 +15,25 @@ class SendMoneyScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            InputField(label: "Enter UPI ID", controller: upiController),
-            const SizedBox(height: 12),
-            InputField(
-              label: "Enter Amount",
+            TextField(
+              controller: phoneController,
+              decoration: const InputDecoration(labelText: "Recipient Phone"),
+              keyboardType: TextInputType.phone,
+            ),
+            const SizedBox(height: 16),
+            TextField(
               controller: amountController,
+              decoration: const InputDecoration(labelText: "Amount"),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: "Pay",
-              icon: Icons.payment,
+            const SizedBox(height: 24),
+            ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Payment sent successfully ✅")),
-                );
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Money Sent!")));
                 Navigator.pop(context);
               },
-            )
+              child: const Text("Send"),
+            ),
           ],
         ),
       ),

@@ -1,15 +1,16 @@
+// lib/screens/transaction_tile.dart
 import 'package:flutter/material.dart';
 
 class TransactionTile extends StatelessWidget {
   final String name;
   final String amount;
-  final bool isDebit;
+  final String status;
 
   const TransactionTile({
     super.key,
     required this.name,
     required this.amount,
-    this.isDebit = true,
+    required this.status,
   });
 
   @override
@@ -17,21 +18,10 @@ class TransactionTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: isDebit ? Colors.redAccent : Colors.green,
-          child: Icon(
-            isDebit ? Icons.arrow_upward : Icons.arrow_downward,
-            color: Colors.white,
-          ),
-        ),
-        title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Text(
-          amount,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: isDebit ? Colors.red : Colors.green,
-          ),
-        ),
+        leading: CircleAvatar(child: Text(name[0])),
+        title: Text(name),
+        subtitle: Text(status),
+        trailing: Text(amount, style: TextStyle(color: amount.startsWith('-') ? Colors.red : Colors.green, fontWeight: FontWeight.bold)),
       ),
     );
   }

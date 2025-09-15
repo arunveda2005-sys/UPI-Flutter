@@ -1,9 +1,6 @@
+// lib/screens/home.dart
 import 'package:flutter/material.dart';
-import '../widgets/balance_card.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/transaction_tile.dart';
-import 'send_money.dart';
-import 'offline_payment.dart';
+import 'transaction_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,49 +8,59 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("UPI Offline")),
+      appBar: AppBar(title: const Text("UPI Home")),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const BalanceCard(balance: "₹10,000"),
+            Card(
+              color: Colors.deepPurple,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: const [
+                    Text("Balance", style: TextStyle(color: Colors.white70, fontSize: 16)),
+                    SizedBox(height: 8),
+                    Text("₹ 25,000", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CustomButton(
-                  text: "Send",
-                  icon: Icons.send,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const SendMoneyScreen()),
-                  ),
-                ),
-                CustomButton(
-                  text: "Offline",
-                  icon: Icons.wifi_off,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const OfflinePaymentScreen()),
-                  ),
-                ),
+                _homeAction(context, Icons.send, "Send", "/send"),
+                _homeAction(context, Icons.bluetooth, "Offline", "/offline"),
               ],
             ),
             const SizedBox(height: 30),
-            const Text("Recent Transactions",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Align(alignment: Alignment.centerLeft, child: Text("Recent Transactions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
             const SizedBox(height: 10),
             Expanded(
               child: ListView(
                 children: const [
-                  TransactionTile(name: "Amazon", amount: "- ₹1,250", isDebit: true),
-                  TransactionTile(name: "Paytm Wallet", amount: "+ ₹500", isDebit: false),
+                  TransactionTile(name: "Rahul", amount: "-₹500", status: "Sent"),
+                  TransactionTile(name: "Priya", amount: "+₹1200", status: "Received"),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _homeAction(BuildContext context, IconData icon, String text, String route) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, route),
+      child: Column(
+        children: [
+          CircleAvatar(radius: 30, child: Icon(icon, size: 28)),
+          const SizedBox(height: 8),
+          Text(text),
+        ],
       ),
     );
   }

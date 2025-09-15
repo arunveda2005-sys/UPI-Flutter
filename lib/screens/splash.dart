@@ -1,32 +1,24 @@
+// lib/screens/splash.dart
 import 'package:flutter/material.dart';
-import 'login.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/login');
+    });
+
+    return Scaffold(
       body: Center(
-        child: Text(
-          "UPI Offline",
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/logo.png", height: 120),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(),
+          ],
         ),
       ),
     );

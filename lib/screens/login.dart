@@ -1,13 +1,12 @@
+// lib/screens/login.dart
 import 'package:flutter/material.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/input_field.dart';
-import 'home.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final phoneController = TextEditingController();
     final pinController = TextEditingController();
 
     return Scaffold(
@@ -15,25 +14,26 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InputField(
-              label: "Enter UPI PIN",
-              controller: pinController,
-              keyboardType: TextInputType.number,
-              obscureText: true,
+            TextField(
+              controller: phoneController,
+              decoration: const InputDecoration(labelText: "Phone Number"),
+              keyboardType: TextInputType.phone,
             ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: "Login",
-              icon: Icons.lock_open,
+            const SizedBox(height: 16),
+            TextField(
+              controller: pinController,
+              decoration: const InputDecoration(labelText: "PIN"),
+              obscureText: true,
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const HomeScreen()),
-                );
+                Navigator.pushReplacementNamed(context, '/home');
               },
-            )
+              child: const Text("Login"),
+            ),
           ],
         ),
       ),
